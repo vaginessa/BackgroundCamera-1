@@ -1,7 +1,7 @@
 package com.nepdeveloper.backgroundcamera.Utility;
 
 public class Log {
-    private static final boolean debuggable = false;
+    private static final boolean debuggable = true;
 
     public static void i(String tag, String msg) {
         if (debuggable) {
