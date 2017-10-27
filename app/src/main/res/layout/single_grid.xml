@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:foreground="@drawable/selector">
+
+    <com.nepdeveloper.backgroundcamera.Utility.SquareImageView
+        android:id="@+id/img"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="3dp"
+        android:id="@+id/media_len"
+        android:textSize="12sp"
+        android:textColor="#ffffff"
+        android:layout_gravity="bottom|end"
+        android:text="3:00"/>
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:id="@+id/small_image"
+        android:src="@drawable/ic_video_camera"
+        android:layout_gravity="bottom|start"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="3dp"
+        android:id="@+id/media_size"
+        android:textSize="12sp"
+        android:textColor="#ffffff"
+        android:layout_gravity="top|end"
+        android:text="1.1 MB"/>
+
+</FrameLayout>

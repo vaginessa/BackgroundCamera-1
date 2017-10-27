@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Background Recorder</string>
+
+    <array name="video_quality">
+
+        <item>HIGH</item>
+        <item>MEDIUM (Recommended)</item>
+        <item>LOW</item>
+    </array>
+
+    <string name="adUnitId">ca-app-pub-3259330710913387/9269953506</string>
+
+    <string name="cancel_label">Cancel</string>
+    <string name="confirm_label">Confirm</string>
+    <string name="selected_folder_label">Selected folder:</string>
+    <string name="create_folder_label">Create folder</string>
+    <string name="create_folder_msg">Create new folder with name "%1$s"?</string>
+    <string name="create_folder_success">Folder created</string>
+    <string name="create_folder_error_no_write_access">Cannot write to this folder</string>
+    <string name="create_folder_error_already_exists">Folder already exists</string>
+    <string name="create_folder_error">Could not create folder</string>
+    <string name="up_label">Up</string>
+    <string name="folder_name_empty">Folder name can\'t be empty</string>
+
+
+</resources>

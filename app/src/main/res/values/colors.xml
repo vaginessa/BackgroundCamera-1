@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FF546E7A</color>
+    <color name="colorPrimaryDark">#FF546E7A</color>
+    <color name="colorPrimaryDarkest">#263238</color>
+    <color name="colorAccent">#FF546E7A</color>
+    <color name="colorPrimaryTransparent">#3F546E7A</color>
+    <color name="whitePress">#48ffffff</color>
+    <color name="whiteSelected">#73ffffff</color>
+    <color name="thumb_checked">#ffffff</color>
+    <color name="thumb_unchecked">#bdbdbd</color>
+    <color name="track_checked">#e0e0e0</color>
+    <color name="track_unchecked">#9e9e9e</color>
+
+    <color name="bright_blue">#33B5E5</color>
+
+    <!-- Use Gingerbread-orange -->
+    <color name="selection_background_color">#FEBB20</color>
+</resources>
