@@ -1,9 +1,6 @@
 package com.nepdeveloper.backgroundcamera.Service;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.app.Service;
-import android.app.job.JobScheduler;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -12,19 +9,17 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.media.ToneGenerator;
 import android.os.Binder;
 import android.os.Build;
-import android.os.Handler;
 import android.os.IBinder;
-import com.nepdeveloper.backgroundcamera.Utility.Log;
-import android.widget.Toast;
 
-import com.nepdeveloper.backgroundcamera.Activity.MainActivity;
 import com.nepdeveloper.backgroundcamera.R;
 import com.nepdeveloper.backgroundcamera.Utility.Constant;
+import com.nepdeveloper.backgroundcamera.Utility.Log;
 import com.nepdeveloper.backgroundcamera.Utility.NewMessageNotification;
 import com.nepdeveloper.backgroundcamera.Utility.Util;
+
+import java.io.IOException;
 
 
 public class MyService extends Service {
@@ -59,11 +54,16 @@ public class MyService extends Service {
 
         if (mediaPlayer != null) {
             mediaPlayer.setLooping(true);
+            try {
+                mediaPlayer.prepare();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             mediaPlayer.start();
         }
 
         audio = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        if (audio.getStreamVolume(AudioManager.STREAM_MUSIC) == 0 && preferences.getBoolean(Constant.LEAST_VOLUME_IS_ONE, true)) {
+        if (audio != null && audio.getStreamVolume(AudioManager.STREAM_MUSIC) == 0 && preferences.getBoolean(Constant.LEAST_VOLUME_IS_ONE, true)) {
             audio.setStreamVolume(AudioManager.STREAM_MUSIC, 1, 0);
         }
     }
@@ -75,8 +75,8 @@ public class MyService extends Service {
             e.printStackTrace();
         }
         if (mediaPlayer != null) {
-            mediaPlayer.stop();
             mediaPlayer.release();
+            mediaPlayer = null;
         }
     }
 
@@ -114,6 +114,8 @@ public class MyService extends Service {
     public BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+            if (intent == null) return;
+
             if (Intent.ACTION_SCREEN_ON.equals(intent.getAction())) {
                 if (preferences.getString(Constant.WHEN_TO_STOP_RECORDING, Constant.MANUALLY_STOP).equals(Constant.SCREEN_IS_TOGGLED_TO_STOP)) {
                     Util.stopRecordingVideo(MyService.this);
@@ -169,6 +171,10 @@ public class MyService extends Service {
                     preferences.getBoolean(Constant.CAPTURE_PHOTO_FRONT_CAM, false)) {
                 if (!Util.isMyServiceRunning(this, ImageCaptureService.class)) {
 
+                    Util.stopRecordingVideo(this);
+                    Util.stopRecordingAudio(this);
+                    Util.stopCapturingImage(this);
+
                     Util.vibrate(this, 100);
 
                     Intent i = new Intent(this, ImageCaptureService.class);
@@ -185,7 +191,10 @@ public class MyService extends Service {
         } else if (preferences.getBoolean(Constant.RECORD_VIDEO, true)) {
             if (!Util.isMyServiceRunning(this, VideoRecorderService.class)) {
 
-                //  ((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(200);
+                Util.stopRecordingVideo(this);
+                Util.stopRecordingAudio(this);
+                Util.stopCapturingImage(this);
+
                 Util.vibrate(this, 100);
 
                 final Intent v = new Intent(this, VideoRecorderService.class);
@@ -202,6 +211,10 @@ public class MyService extends Service {
         } else if (preferences.getBoolean(Constant.RECORD_AUDIO, false)) {
             if (!Util.isMyServiceRunning(this, AudioRecorderService.class)) {
                 Util.vibrate(this, 100);
+
+                Util.stopRecordingVideo(this);
+                Util.stopRecordingAudio(this);
+                Util.stopCapturingImage(this);
 
                 final Intent v = new Intent(this, AudioRecorderService.class);
                 Log.i("biky", "audio recorder service called");

@@ -1,7 +1,6 @@
 package com.nepdeveloper.backgroundcamera.Activity;
 
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -36,7 +35,6 @@ import com.nepdeveloper.backgroundcamera.Service.VideoRecorderService;
 import com.nepdeveloper.backgroundcamera.Utility.Constant;
 import com.nepdeveloper.backgroundcamera.Utility.Util;
 
-import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -302,7 +300,7 @@ public class GalleryFullscreen extends AppCompatActivity {
                             if (selected.valueAt(i)) {
                                 int position = selected.keyAt(i);
                                 File file = recyclerViewAdapter.getItem(position);
-                                recyclerViewAdapter.remove(file, false);
+                                recyclerViewAdapter.delete(file);
                                 positions.add(position);
                             }
                         }

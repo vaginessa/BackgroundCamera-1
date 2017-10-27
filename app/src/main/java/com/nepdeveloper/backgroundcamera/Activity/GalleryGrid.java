@@ -1,6 +1,5 @@
 package com.nepdeveloper.backgroundcamera.Activity;
 
-import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -29,7 +28,6 @@ import com.nepdeveloper.backgroundcamera.R;
 import com.nepdeveloper.backgroundcamera.Service.AudioRecorderService;
 import com.nepdeveloper.backgroundcamera.Service.VideoRecorderService;
 import com.nepdeveloper.backgroundcamera.Utility.Constant;
-import com.nepdeveloper.backgroundcamera.Utility.NewMessageNotification;
 import com.nepdeveloper.backgroundcamera.Utility.Util;
 
 import java.io.File;
@@ -184,7 +182,7 @@ public class GalleryGrid extends AppCompatActivity {
                                             if (selected.valueAt(i)) {
                                                 int position = selected.keyAt(i);
                                                 File selectedFile = adapter.getItem(position);
-                                                adapter.remove(selectedFile, false);
+                                                adapter.delete(selectedFile);
                                             }
                                         }
                                         adapter.notifyDataSetChanged();
@@ -259,7 +257,7 @@ public class GalleryGrid extends AppCompatActivity {
             ArrayList<Integer> positions = data.getIntegerArrayListExtra(Constant.DELETED_POSITIONS);
             for (int position : positions) {
                 if (position >= 0 && position < files.size()) {
-                    adapter.remove(files.get(position), false);
+                    adapter.delete(files.get(position));
                 }
             }
             if (files.isEmpty()) {

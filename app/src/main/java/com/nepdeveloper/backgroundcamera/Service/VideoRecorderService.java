@@ -29,7 +29,6 @@ import com.nepdeveloper.backgroundcamera.Utility.Constant;
 import com.nepdeveloper.backgroundcamera.Utility.NewMessageNotification;
 import com.nepdeveloper.backgroundcamera.Utility.Util;
 
-import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.text.SimpleDateFormat;

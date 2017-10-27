@@ -133,12 +133,16 @@ public class ImageCaptureService extends HiddenCameraService {
 
         if (getSharedPreferences(Constant.PREFERENCE_NAME, MODE_PRIVATE).getBoolean(Constant.SHUTTER_SOUND, true)) {
             final AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-            am.setStreamVolume(AudioManager.STREAM_MUSIC, am.getStreamMaxVolume(AudioManager.STREAM_MUSIC) * 3 / 4, 0);
+            if (am != null) {
+                am.setStreamVolume(AudioManager.STREAM_MUSIC, am.getStreamMaxVolume(AudioManager.STREAM_MUSIC) * 3 / 4, 0);
+            }
             cameraSound.start();
             cameraSound.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                 @Override
                 public void onCompletion(MediaPlayer mediaPlayer) {
-                    am.setStreamVolume(AudioManager.STREAM_MUSIC, 1, 0);
+                    if (am != null) {
+                        am.setStreamVolume(AudioManager.STREAM_MUSIC, 1, 0);
+                    }
                 }
             });
         }

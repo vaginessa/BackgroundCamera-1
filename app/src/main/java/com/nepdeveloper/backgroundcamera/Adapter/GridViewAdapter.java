@@ -6,7 +6,9 @@ import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
 import com.nepdeveloper.backgroundcamera.Utility.Log;
+
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -132,12 +134,12 @@ public class GridViewAdapter extends ArrayAdapter<File> {
         }
     }
 
-    public void remove(File file, boolean notify) {
+    public void delete(File file) {
         if (file != null) {
             //noinspection ResultOfMethodCallIgnored
             file.delete();
             files.remove(file);
-            if (notify) notifyDataSetChanged();
+            notifyDataSetChanged();
         }
     }
 

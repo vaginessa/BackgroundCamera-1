@@ -183,12 +183,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
     }
 
-    public void remove(File file, boolean notify) {
+    public void delete(File file) {
         if (file != null) {
             //noinspection ResultOfMethodCallIgnored
             file.delete();
             files.remove(file);
-            if (notify) notifyDataSetChanged();
+            notifyDataSetChanged();
         }
     }
 

@@ -21,6 +21,14 @@
     <string name="create_folder_error">Could not create folder</string>
     <string name="up_label">Up</string>
     <string name="folder_name_empty">Folder name can\'t be empty</string>
+    <string name="stop_recording_from_app_or_notification">Stop recording from app or notification</string>
+    <string name="turn_screen_on_from_off_to_stop_recording">Turn screen on from off to stop recording</string>
+    <string name="stop_recording_audio">STOP RECORDING AUDIO</string>
+    <string name="stop_recording_video">STOP RECORDING VIDEO</string>
+    <string name="more">MORE</string>
+    <string name="less">LESS</string>
+    <string name="hide_advanced_setting">HIDE ADVANCED SETTING</string>
+    <string name="show_advanced_setting">SHOW ADVANCED SETTING</string>
 
 
 </resources>

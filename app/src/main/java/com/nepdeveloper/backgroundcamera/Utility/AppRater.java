@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.v7.app.AlertDialog;
-import com.nepdeveloper.backgroundcamera.Utility.Log;
-
 
 public class AppRater {
 
@@ -48,7 +46,7 @@ public class AppRater {
         editor.apply();
     }
 
-    public static void showRateDialog(final Context context, final SharedPreferences.Editor editor) {
+    private static void showRateDialog(final Context context, final SharedPreferences.Editor editor) {
         new AlertDialog.Builder(context)
                 .setTitle("Rate this app")
                 .setMessage("If you enjoy using this app, Please rate it.")

@@ -1,12 +1,12 @@
 package com.nepdeveloper.backgroundcamera.Activity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.media.AudioManager;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.nepdeveloper.backgroundcamera.Utility.Log;
@@ -107,6 +107,7 @@ public class MediaPlayer extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void setupMediaPlayer(String videoViewPath) throws Exception {
         videoView.setVideoPath(videoViewPath);
 
@@ -150,7 +151,7 @@ public class MediaPlayer extends AppCompatActivity {
             public void onPrepared(android.media.MediaPlayer mediaPlayer) {
                 AudioManager audio = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
                 //if video is playing without no sound user would know that volume is zero but incase of audio playback we need to implicitly increase volume to 3rd quarter level
-                if (!isVideo && audio.getStreamVolume(AudioManager.STREAM_MUSIC) < audio.getStreamMaxVolume(AudioManager.STREAM_MUSIC) * 3 / 4) {
+                if (audio != null && !isVideo && audio.getStreamVolume(AudioManager.STREAM_MUSIC) < audio.getStreamMaxVolume(AudioManager.STREAM_MUSIC) * 3 / 4) {
                     audio.setStreamVolume(AudioManager.STREAM_MUSIC, audio.getStreamMaxVolume(AudioManager.STREAM_MUSIC) * 3 / 4, 0);
                 }
 
@@ -201,6 +202,7 @@ public class MediaPlayer extends AppCompatActivity {
                 return gestureDetector.onTouchEvent(motionEvent);
             }
         });
+
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -257,6 +259,7 @@ public class MediaPlayer extends AppCompatActivity {
             Log.i("biky", "cal dist=" + delx + " actual dist = " + distanceX);*/
             return super.onScroll(e1, e2, distanceX, distanceY);
         }
+
     }
 
     @Override

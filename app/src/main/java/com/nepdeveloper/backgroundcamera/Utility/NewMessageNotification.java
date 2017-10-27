@@ -127,16 +127,22 @@ public class NewMessageNotification {
             // Sets whether notifications posted to this channel appear on the lockscreen or not
             androidChannel.setLockscreenVisibility(Notification.VISIBILITY_SECRET);
             // Sets whether notifications posted to this channel should display notification lights
-            nm.createNotificationChannel(androidChannel);
+            if (nm != null) {
+                nm.createNotificationChannel(androidChannel);
+            }
         }
 
-        nm.notify(1, notification);
+        if (nm != null) {
+            nm.notify(1, notification);
+        }
     }
 
     @TargetApi(Build.VERSION_CODES.ECLAIR)
     public static void cancel(final Context context) {
         final NotificationManager nm = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
-        nm.cancel(NOTIFICATION_TAG, 1);
+        if (nm != null) {
+            nm.cancel(NOTIFICATION_TAG, 1);
+        }
     }
 }

@@ -15,33 +15,23 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
-import android.support.design.widget.BaseTransientBottomBar;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
-
-import com.nepdeveloper.backgroundcamera.Utility.Log;
-
-import android.text.Html;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.nepdeveloper.backgroundcamera.BroadcastReceiver.AlarmReceiver;
 import com.nepdeveloper.backgroundcamera.R;
 import com.nepdeveloper.backgroundcamera.Service.AudioRecorderService;
 import com.nepdeveloper.backgroundcamera.Service.FileTransferService;
@@ -49,15 +39,13 @@ import com.nepdeveloper.backgroundcamera.Service.MyService;
 import com.nepdeveloper.backgroundcamera.Service.VideoRecorderService;
 import com.nepdeveloper.backgroundcamera.Utility.AppRater;
 import com.nepdeveloper.backgroundcamera.Utility.Constant;
+import com.nepdeveloper.backgroundcamera.Utility.Log;
 import com.nepdeveloper.backgroundcamera.Utility.NewMessageNotification;
 import com.nepdeveloper.backgroundcamera.Utility.Util;
-import com.rey.material.widget.SnackBar;
 import com.rey.material.widget.Switch;
-
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
     private MyService myService;
@@ -145,9 +133,9 @@ public class MainActivity extends AppCompatActivity {
             Intent i = new Intent(this, MyService.class);
             startService(i);
         }
-
-        Calendar calendar = Calendar.getInstance();
 /*
+        Calendar calendar = Calendar.getInstance();
+
 
         calendar.set(Calendar.HOUR_OF_DAY, 23); // For 1 PM or 2 PM
         calendar.set(Calendar.MINUTE, 33);
@@ -201,7 +189,8 @@ public class MainActivity extends AppCompatActivity {
         recordVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                stopRecordingAudio();
+                Util.stopRecordingAudio(MainActivity.this);
+                Util.stopCapturingImage(MainActivity.this);
 
                 recordVideo.setChecked(true);
                 preferences.edit().putBoolean(Constant.RECORD_VIDEO, true).apply();
@@ -220,7 +209,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Util.stopRecordingVideo(MainActivity.this);
-                stopRecordingAudio();
+                Util.stopRecordingAudio(MainActivity.this);
 
                 recordVideo.setChecked(false);
                 preferences.edit().putBoolean(Constant.RECORD_VIDEO, false).apply();
@@ -240,6 +229,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Util.stopRecordingVideo(MainActivity.this);
+                Util.stopCapturingImage(MainActivity.this);
 
                 recordVideo.setChecked(false);
                 preferences.edit().putBoolean(Constant.RECORD_VIDEO, false).apply();
@@ -282,7 +272,7 @@ public class MainActivity extends AppCompatActivity {
                         public void run() {
                             scroll.fullScroll(View.FOCUS_DOWN);
                             moreBtn.setEnabled(true);
-                            moreBtn.setText("LESS");
+                            moreBtn.setText(R.string.less);
                             findViewById(R.id.fab_gallery).setVisibility(View.GONE);
                         }
                     }, 500);
@@ -290,7 +280,7 @@ public class MainActivity extends AppCompatActivity {
                     findViewById(R.id.more_opt).setVisibility(View.GONE);
                     findViewById(R.id.fab_gallery).setVisibility(View.VISIBLE);
 
-                    moreBtn.setText("MORE");
+                    moreBtn.setText(R.string.more);
 
                 }
             }
@@ -340,9 +330,9 @@ public class MainActivity extends AppCompatActivity {
         //presetup
         if (Util.isMyServiceRunning(this, VideoRecorderService.class)) {
             findViewById(R.id.stop_recording).setVisibility(View.VISIBLE);
-            ((AppCompatButton) findViewById(R.id.stop_recording)).setText("STOP RECORDING VIDEO");
+            ((AppCompatButton) findViewById(R.id.stop_recording)).setText(R.string.stop_recording_video);
         } else if (Util.isMyServiceRunning(this, AudioRecorderService.class)) {
-            ((AppCompatButton) findViewById(R.id.stop_recording)).setText("STOP RECORDING AUDIO");
+            ((AppCompatButton) findViewById(R.id.stop_recording)).setText(R.string.stop_recording_audio);
             findViewById(R.id.stop_recording).setVisibility(View.VISIBLE);
         } else {
             findViewById(R.id.stop_recording).setVisibility(View.GONE);
@@ -374,14 +364,6 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.more_opt).setVisibility(View.GONE);
     }
 
-    private void stopRecordingAudio() {
-        stopService(new Intent(this, AudioRecorderService.class));
-    }
-
-    private void stopRecordingVideo() {
-        stopService(new Intent(this, VideoRecorderService.class));
-    }
-
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -391,10 +373,10 @@ public class MainActivity extends AppCompatActivity {
                     findViewById(R.id.stop_recording).setVisibility(View.GONE);
                 }
             } else if (Constant.RECORDING_VIDEO.equals(intent.getAction())) {
-                ((AppCompatButton) findViewById(R.id.stop_recording)).setText("STOP RECORDING VIDEO");
+                ((AppCompatButton) findViewById(R.id.stop_recording)).setText(R.string.stop_recording_video);
                 findViewById(R.id.stop_recording).setVisibility(View.VISIBLE);
             } else if (Constant.RECORDING_AUDIO.equals(intent.getAction())) {
-                ((AppCompatButton) findViewById(R.id.stop_recording)).setText("STOP RECORDING AUDIO");
+                ((AppCompatButton) findViewById(R.id.stop_recording)).setText(R.string.stop_recording_audio);
                 findViewById(R.id.stop_recording).setVisibility(View.VISIBLE);
             }
         }
@@ -507,11 +489,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if (preferences.getString(Constant.WHEN_TO_STOP_RECORDING, Constant.MANUALLY_STOP).equals(Constant.SCREEN_IS_TOGGLED_TO_STOP)) {
-            ((TextView) findViewById(R.id.video_switch_text1)).setText("Turn screen on from off to stop recording");
-            ((TextView) findViewById(R.id.audio_switch_text1)).setText("Turn screen on from off to stop recording");
+            ((TextView) findViewById(R.id.video_switch_text1)).setText(R.string.turn_screen_on_from_off_to_stop_recording);
+            ((TextView) findViewById(R.id.audio_switch_text1)).setText(R.string.turn_screen_on_from_off_to_stop_recording);
         } else if (preferences.getString(Constant.WHEN_TO_STOP_RECORDING, Constant.MANUALLY_STOP).equals(Constant.MANUALLY_STOP)) {
-            ((TextView) findViewById(R.id.video_switch_text1)).setText("Stop recording from app or notification");
-            ((TextView) findViewById(R.id.audio_switch_text1)).setText("Stop recording from app or notification");
+            ((TextView) findViewById(R.id.video_switch_text1)).setText(R.string.stop_recording_from_app_or_notification);
+            ((TextView) findViewById(R.id.audio_switch_text1)).setText(R.string.stop_recording_from_app_or_notification);
         }
     }
 
@@ -545,6 +527,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void exitApp() {
         Util.stopMainService(this);
+        Util.stopCapturingImage(this);
+        Util.stopRecordingAudio(this);
+        Util.stopRecordingVideo(this);
         finish();
     }
 

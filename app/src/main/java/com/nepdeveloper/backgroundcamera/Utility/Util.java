@@ -1,7 +1,6 @@
 package com.nepdeveloper.backgroundcamera.Utility;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
@@ -12,14 +11,11 @@ import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.nepdeveloper.backgroundcamera.Utility.Log;
-
 import com.nepdeveloper.backgroundcamera.Service.AudioRecorderService;
+import com.nepdeveloper.backgroundcamera.Service.ImageCaptureService;
 import com.nepdeveloper.backgroundcamera.Service.MyService;
 import com.nepdeveloper.backgroundcamera.Service.VideoRecorderService;
 
@@ -31,11 +27,16 @@ public class Util {
     public static void vibrate(Context context, long delay) {
         int permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.VIBRATE);
         if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+            Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                ((Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE)).vibrate(VibrationEffect.createOneShot(delay, VibrationEffect.DEFAULT_AMPLITUDE));
+                if (vibrator != null) {
+                    vibrator.vibrate(VibrationEffect.createOneShot(delay, VibrationEffect.DEFAULT_AMPLITUDE));
+                }
             } else {
-                //noinspection deprecation
-                ((Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE)).vibrate(delay);
+                if (vibrator != null) {
+                    //noinspection deprecation
+                    vibrator.vibrate(delay);
+                }
             }
         }
     }
@@ -43,11 +44,16 @@ public class Util {
     public static void vibrate(Context context, long[] pattern, int repeat) {
         int permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.VIBRATE);
         if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+            Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                ((Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE)).vibrate(VibrationEffect.createWaveform(pattern, repeat));
+                if (vibrator != null) {
+                    vibrator.vibrate(VibrationEffect.createWaveform(pattern, repeat));
+                }
             } else {
-                //noinspection deprecation
-                ((Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE)).vibrate(pattern, repeat);
+                if (vibrator != null) {
+                    //noinspection deprecation
+                    vibrator.vibrate(pattern, repeat);
+                }
             }
         }
     }
@@ -90,10 +96,12 @@ public class Util {
 
     public static boolean isMyServiceRunning(Context context, Class<?> serviceClass) {
         ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        //noinspection deprecation
-        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            if (serviceClass.getName().equals(service.service.getClassName())) {
-                return true;
+        if (manager != null) {
+            //noinspection deprecation
+            for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+                if (serviceClass.getName().equals(service.service.getClassName())) {
+                    return true;
+                }
             }
         }
         return false;
@@ -109,6 +117,11 @@ public class Util {
         context.stopService(new Intent(context, AudioRecorderService.class));
     }
 
+    public static void stopCapturingImage(Context context) {
+        Log.i("biky", "image capture service stop called");
+        context.stopService(new Intent(context,ImageCaptureService.class));
+    }
+
     public static void stopMainService(Context context) {
         context.stopService(new Intent(context, MyService.class));
     }
@@ -117,7 +130,7 @@ public class Util {
         Snackbar snackbar;
         snackbar = Snackbar.make(view, msg, Snackbar.LENGTH_LONG);
         View snackBarView = snackbar.getView();
-        TextView textView = (TextView) snackBarView.findViewById(android.support.design.R.id.snackbar_text);
+        TextView textView = snackBarView.findViewById(android.support.design.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
         return snackbar;
     }

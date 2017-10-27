@@ -1,5 +1,6 @@
 package com.nepdeveloper.backgroundcamera.Adapter.FullScreenViewAdapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaMetadataRetriever;
@@ -46,8 +47,7 @@ public class ViewPagerAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(final ViewGroup container, final int position) {
-        LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = ((Activity) context).getLayoutInflater();
 
         View view = inflater.inflate(R.layout.single_view, container,
                 false);

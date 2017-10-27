@@ -1,6 +1,7 @@
 
 package com.nepdeveloper.backgroundcamera.Service;
 
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.Service;
@@ -172,7 +173,9 @@ public class FileTransferService extends Service {
             builder.setTicker(text);
             notification = builder.build();
 
-            manager.notify(Constant.NOTIFICATION_ID_TRANSFERRING_FILES, notification);
+            if (manager != null) {
+                manager.notify(Constant.NOTIFICATION_ID_TRANSFERRING_FILES, notification);
+            }
         } else {
             Notification.Builder builder = new Notification.Builder(FileTransferService.this, NewMessageNotification.CHANNEL_ID)
                     .setContentTitle(getString(R.string.app_name))
@@ -189,7 +192,9 @@ public class FileTransferService extends Service {
 
             notification = builder.build();
 
-            manager.notify(Constant.NOTIFICATION_ID_TRANSFERRING_FILES, notification);
+            if (manager != null) {
+                manager.notify(Constant.NOTIFICATION_ID_TRANSFERRING_FILES, notification);
+            }
         }
     }
 }

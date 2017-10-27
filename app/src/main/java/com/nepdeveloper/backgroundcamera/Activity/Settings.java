@@ -240,12 +240,13 @@ public class Settings extends AppCompatActivity {
                         public void run() {
                             scroll.fullScroll(View.FOCUS_DOWN);
                             showAdvancedSetting.setEnabled(true);
-                            showAdvancedSetting.setText("HIDE ADVANCED SETTING");
+                            showAdvancedSetting.setText(R.string.hide_advanced_setting);
                         }
                     }, 500);
+
                 } else {
                     findViewById(R.id.advanced_setting).setVisibility(View.GONE);
-                    showAdvancedSetting.setText("SHOW ADVANCED SETTING");
+                    showAdvancedSetting.setText(R.string.show_advanced_setting);
                 }
             }
         });
@@ -257,7 +258,7 @@ public class Settings extends AppCompatActivity {
                 preferences.edit().putBoolean(Constant.LEAST_VOLUME_IS_ONE, !checked).apply();
                 if (!checked) {
                     AudioManager audio = ((AudioManager) getSystemService(Context.AUDIO_SERVICE));
-                    if (audio.getStreamVolume(AudioManager.STREAM_MUSIC) == 0) {
+                    if (audio != null && audio.getStreamVolume(AudioManager.STREAM_MUSIC) == 0) {
                         audio.setStreamVolume(AudioManager.STREAM_MUSIC, 1, 0);
                     }
                 }
@@ -362,7 +363,7 @@ public class Settings extends AppCompatActivity {
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        return notificationManager.isNotificationPolicyAccessGranted();
+        return notificationManager != null && notificationManager.isNotificationPolicyAccessGranted();
     }
 
     private void requestDoNotDisturbPermission() {
@@ -401,7 +402,7 @@ public class Settings extends AppCompatActivity {
             NotificationManager notificationManager =
                     (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-            if (notificationManager.isNotificationPolicyAccessGranted()) {
+            if (notificationManager != null && notificationManager.isNotificationPolicyAccessGranted()) {
                 ((Switch) findViewById(R.id.shutter_sound)).setChecked(false);
                 preferences.edit().putBoolean(Constant.SHUTTER_SOUND, false).apply();
             }
