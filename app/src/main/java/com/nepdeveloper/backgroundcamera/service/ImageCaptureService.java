@@ -51,11 +51,6 @@ public class ImageCaptureService extends HiddenCameraService {
         Log.i("biky", "image service cam. on start command");
         this.intent = intent;
 
-        if (!permissionIsGranted()) {
-            stopSelf();
-            return START_NOT_STICKY;
-        }
-
         cameraSound = MediaPlayer.create(this, R.raw.camera_shutter);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.
@@ -211,41 +206,5 @@ public class ImageCaptureService extends HiddenCameraService {
     public void onDestroy() {
         super.onDestroy();
         Log.i("biky", "on destroy. image capture service  cam");
-    }
-
-
-    private boolean permissionIsGranted() {
-        if (Build.VERSION.SDK_INT < 23) {
-            return true;
-        }
-        //noinspection deprecation
-        if (Camera.getNumberOfCameras() <= 0) {
-            Log.i("biky", "Capture Failed. No camera in this device");
-            NewMessageNotification.notify(this, "Capture Failed. Your device doesn't have a camera", NewMessageNotification.ERROR);
-            return false;
-        }
-        if (!Settings.canDrawOverlays(this)) {
-            Log.i("biky", "Capture Failed. Allow this app permission to draw over apps");
-            NewMessageNotification.notify(this, "Capture Failed. Allow this app permission to draw over apps", NewMessageNotification.PERMISSION_DENIED);
-            return false;
-        }
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            Log.i("biky", "Capture Failed. You have not permitted this app to use camera");
-            NewMessageNotification.notify(this, "Capture Failed. You have not permitted this app to use camera", NewMessageNotification.PERMISSION_DENIED);
-            return false;
-        }
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            Log.i("biky", "Capture Failed. Allow this app write storage permission");
-            NewMessageNotification.notify(this, "Capture Failed. Allow this app write storage permission", NewMessageNotification.PERMISSION_DENIED);
-            return false;
-        }
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            Log.i("biky", "Capture Failed. Allow this app write storage permission");
-            NewMessageNotification.notify(this, "Capture Failed. Allow this app write permission", NewMessageNotification.PERMISSION_DENIED);
-            return false;
-        }
-        return true;
     }
 }

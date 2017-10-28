@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:text="DECLINE" />
+            android:text="@string/decline" />
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/accept"
@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:text="ACCEPT" />
+            android:text="@string/accept" />
 
     </LinearLayout>
 
@@ -48,14 +48,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingBottom="10dp"
-                android:text="TERMS AND CONDITIONS"
+                android:text="@string/terms_and_conditions"
                 android:textSize="16sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:text="- It is your responsibility to use this app in compliance with local and federal laws.\n- You must not invade on people's privacy with this app."
+                android:text="@string/it_is_your_responsibility_to_use_this_app_in_compliance_with_local_and_federal_laws_n_you_must_not_invade_on_people_s_privacy_with_this_app"
                 android:textStyle="bold" />
 
             <TextView
@@ -63,38 +63,38 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingBottom="10dp"
-                android:text="We hold no liability if you choose to use this app illegally. Please read the following for explanation of each of the permissions required. Using this app is not mandatory. If you disagree you must uninstall this app now." />
+                android:text="@string/we_hold_no_liability_if_you_choose_to_use_this_app_illegally_please_read_the_following_for_explanation_of_each_of_the_permissions_required_using_this_app_is_not_mandatory_if_you_disagree_you_must_uninstall_this_app_now" />
 
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1. Take picture and video"
+                android:text="@string/_1_take_picture_and_video"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingBottom="10dp"
-                android:text="Picture and video is taken only on your consent." />
+                android:text="@string/picture_and_video_is_taken_only_on_your_consent" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" 2. Access to storage"
+                android:text="@string/_2_access_to_storage"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingBottom="10dp"
-                android:text="The recorded video or the image captured is saved to storage and loaded from storage while viewing in gallery. User may delete picture or video taken in the app. There is no other purpose of accessing the storage." />
+                android:text="@string/the_recorded_video_or_the_image_captured_is_saved_to_storage_and_loaded_from_storage_while_viewing_in_gallery_user_may_delete_picture_or_video_taken_in_the_app_there_is_no_other_purpose_of_accessing_the_storage" />
 
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" 3. Draw over other apps"
+                android:text="@string/_3_draw_over_other_apps"
                 android:textStyle="bold" />
 
 
@@ -102,31 +102,31 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingBottom="10dp"
-                android:text="For camera to run in background without preview, this permission is required." />
+                android:text="@string/for_camera_to_run_in_background_without_preview_this_permission_is_required" />
 
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="4. Internet permission"
+                android:text="@string/_4_internet_permission"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingBottom="10dp"
-                android:text="This permission is required by ads in the app. User won't be able to discard ads to show in their app currently." />
+                android:text="@string/this_permission_is_required_by_ads_in_the_app_user_won_t_be_able_to_discard_ads_to_show_in_their_app_currently" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="5. Run at startup"
+                android:text="@string/_5_run_at_startup"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="If device is restarted, service will be started to resume background task." />
+                android:text="@string/if_device_is_restarted_service_will_be_started_to_resume_background_task" />
 
         </LinearLayout>
 

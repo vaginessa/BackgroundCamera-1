@@ -160,7 +160,7 @@ public class MyService extends Service {
         if (preferences == null) {
             return;
         }
-        if (preferences.getBoolean(Constant.CAPTURE_PHOTO, false)) {
+        if (Util.permissionIsGranted(this, Constant.CAPTURE_PHOTO) && preferences.getBoolean(Constant.CAPTURE_PHOTO, false)) {
             if (preferences.getBoolean(Constant.CAPTURE_PHOTO_BACK_CAM, true) ||
                     preferences.getBoolean(Constant.CAPTURE_PHOTO_FRONT_CAM, false)) {
                 if (!Util.isMyServiceRunning(this, ImageCaptureService.class)) {
@@ -182,7 +182,7 @@ public class MyService extends Service {
                     Log.i("biky", "image capture service already running");
                 }
             }
-        } else if (preferences.getBoolean(Constant.RECORD_VIDEO, true)) {
+        } else if (Util.permissionIsGranted(this, Constant.RECORD_VIDEO) && preferences.getBoolean(Constant.RECORD_VIDEO, true)) {
             if (!Util.isMyServiceRunning(this, VideoRecorderService.class)) {
 
                 Util.stopRecordingVideo(this);
@@ -202,7 +202,7 @@ public class MyService extends Service {
             } else {
                 Log.i("biky", "video recording service already running");
             }
-        } else if (preferences.getBoolean(Constant.RECORD_AUDIO, false)) {
+        } else if (Util.permissionIsGranted(this, Constant.RECORD_AUDIO) && preferences.getBoolean(Constant.RECORD_AUDIO, false)) {
             if (!Util.isMyServiceRunning(this, AudioRecorderService.class)) {
                 Util.vibrate(this, 100);
 

@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clickable="true"
+    android:focusable="true"
     android:background="@color/colorPrimaryDarkest">
 
     <com.nepdeveloper.backgroundcamera.utility.TouchImageView
@@ -18,6 +19,7 @@
         android:background="?attr/selectableItemBackgroundBorderless">
 
         <ImageView
+            android:contentDescription="@string/play"
             android:id="@+id/play_btn"
             android:layout_width="150dp"
             android:layout_height="150dp"
@@ -33,11 +35,11 @@
             android:layout_below="@id/play_btn"
             android:layout_centerHorizontal="true"
             android:padding="10dp"
-            android:text="3:00"
             android:textColor="#ffffff"
             android:textSize="16sp" />
 
         <ImageView
+            android:contentDescription="@string/video"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:id="@+id/small_image"

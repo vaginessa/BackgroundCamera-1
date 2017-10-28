@@ -17,7 +17,6 @@ import android.os.Build;
 import android.os.IBinder;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
-
 import com.nepdeveloper.backgroundcamera.utility.Log;
 
 import com.nepdeveloper.backgroundcamera.R;
@@ -37,30 +36,6 @@ public class AudioRecorderService extends Service {
     private SharedPreferences preferences;
     private File audioFile = null;
 
-    private boolean permissionIsGranted() {
-        if (Build.VERSION.SDK_INT < 23) {
-            return true;
-        }
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-            Log.i("biky", "Recording Failed. You have not permitted this app to record audio");
-            NewMessageNotification.notify(this, "Recording Failed. You have not permitted this app to record audio", NewMessageNotification.ERROR);
-            return false;
-        }
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            Log.i("biky", "Recording Failed. Allow this app write storage permission");
-            NewMessageNotification.notify(this, "Recording Failed. Allow this app write storage permission", NewMessageNotification.PERMISSION_DENIED);
-            return false;
-        }
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            Log.i("biky", "Recording Failed. Allow this app read storage permission");
-            NewMessageNotification.notify(this, "Recording Failed. Allow this app read storage permission", NewMessageNotification.PERMISSION_DENIED);
-            return false;
-        }
-        return true;
-    }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -71,12 +46,6 @@ public class AudioRecorderService extends Service {
         }
 
         preferences = getSharedPreferences(Constant.PREFERENCE_NAME, MODE_PRIVATE);
-
-        if (!permissionIsGranted()) {
-            Log.i("biky", "permission is not granted");
-            stopSelf();
-            return START_NOT_STICKY;
-        }
 
         if (intent != null && Constant.ACTION_STOP_SELF.equals(intent.getAction())) {
             Log.i("biky", "stopped from notification");
@@ -132,7 +101,7 @@ public class AudioRecorderService extends Service {
             if (preferences.getBoolean(Constant.SHOW_NOTIFICATION, true)) {
                 builder.setSmallIcon(R.drawable.ic_stat);
                 builder.setTicker(text);
-            } else {
+            }else{
                 builder.setSmallIcon(R.drawable.ic_empty);
             }
 
@@ -251,7 +220,6 @@ public class AudioRecorderService extends Service {
         if (nm != null) {
             nm.cancel(Constant.NOTIFICATION_ID_AUDIO_RECORD);
         }
-        stopForeground(true);
         super.onDestroy();
     }
 

@@ -10,20 +10,20 @@
         android:id="@+id/adView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        ads:adSize="SMART_BANNER"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        ads:adSize="SMART_BANNER"
         ads:adUnitId="@string/adUnitId">
 
     </com.google.android.gms.ads.AdView>
 
 
     <ScrollView
+        android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/scroll_view"
-        android:scrollbars="none"
-        android:layout_above="@id/adView">
+        android:layout_above="@id/adView"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -56,7 +56,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_centerVertical="true"
-                            android:text="CAMERA &amp; AUDIO SETTINGS"
+                            android:text="@string/camera_amp_audio_settings"
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
@@ -92,14 +92,18 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Camera shutter sound"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_toLeftOf="@id/shutter_sound"
+                            android:layout_toStartOf="@id/shutter_sound"
+                            android:text="@string/camera_shutter_sound"
                             android:textSize="17sp" />
                     </RelativeLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="While image capture and video recording start/stop."
+                        android:text="@string/while_image_capture_and_video_recording_start_stop"
                         android:textSize="15sp" />
 
 
@@ -115,15 +119,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingBottom="10dp"
-                        android:text="Video recording quality"
+                        android:text="@string/video_recording_quality"
                         android:textSize="17sp" />
 
                     <Spinner
                         android:id="@+id/video_recording_quality"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:entries="@array/video_quality"
-                        />
+                        android:entries="@array/video_quality" />
 
                     <View
                         android:layout_width="match_parent"
@@ -144,14 +147,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingBottom="10dp"
-                            android:text="Storage location"
+                            android:text="@string/storage_location"
                             android:textSize="17sp" />
 
                         <TextView
                             android:id="@+id/storage_location"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="/sdcard/emulator/0/BGC" />
+                            android:layout_height="wrap_content" />
 
                     </LinearLayout>
 
@@ -172,7 +174,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingBottom="10dp"
-                            android:text="Stop recording video | audio when"
+                            android:text="@string/stop_recording_video_audio_when"
                             android:textSize="17sp" />
 
                         <RadioGroup
@@ -184,7 +186,7 @@
                                 android:id="@+id/screen_off_on"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Screen is turned on from off"
+                                android:text="@string/screen_is_turned_on_from_off"
                                 android:textSize="15sp" />
 
                             <RadioButton
@@ -192,7 +194,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:checked="true"
-                                android:text="User stops from app or notification"
+                                android:text="@string/user_stops_from_app_or_notification"
                                 android:textSize="15sp" />
                         </RadioGroup>
                     </LinearLayout>
@@ -223,7 +225,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_centerVertical="true"
-                            android:text="NOTIFICATION SETTING"
+                            android:text="@string/notification_setting"
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
@@ -259,7 +261,11 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Show Notification"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_toLeftOf="@id/show_notification"
+                            android:layout_toStartOf="@id/show_notification"
+                            android:text="@string/show_notification"
                             android:textSize="17sp" />
 
                     </RelativeLayout>
@@ -267,7 +273,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Note: In android 8.0+ ongoing notification will however be shown"
+                        android:text="@string/note_in_android_8_0_ongoing_notification_will_however_be_shown"
                         android:textSize="15sp" />
 
                 </LinearLayout>
@@ -276,50 +282,6 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
-                app:cardElevation="3dp"
-                app:cardUseCompatPadding="true">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="10dp">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp">
-
-                        <com.rey.material.widget.Switch
-                            android:id="@+id/developer_mode"
-                            style="@style/Material.Widget.Switch"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentRight="true"
-                            android:checked="true" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Developer Mode"
-                            android:textSize="17sp" />
-                    </RelativeLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Shows TEST button"
-                        android:textSize="15sp" />
-
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
                 app:cardElevation="3dp"
                 app:cardUseCompatPadding="true">
 
@@ -340,7 +302,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_centerVertical="true"
-                            android:text="SCHEDULE TO SAVE BATTERY"
+                            android:text="@string/schedule_to_save_battery"
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
@@ -367,12 +329,12 @@
                             android:id="@+id/always_active_radio"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Always active" />
+                            android:text="@string/always_active" />
 
 
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="1dp"
+                            android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"
                             android:layout_marginTop="10dp"
                             android:background="#eeeeee" />
@@ -382,7 +344,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:checked="true"
-                            android:text="Schedule service" />
+                            android:text="@string/schedule_service" />
 
                     </RadioGroup>
 
@@ -401,6 +363,7 @@
                             android:layout_weight="0.5"
                             android:background="?attr/selectableItemBackgroundBorderless"
                             android:clickable="true"
+                            android:focusable="true"
                             android:onClick="setStartTime"
                             android:padding="5dp">
 
@@ -410,7 +373,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentLeft="true"
                                 android:layout_alignParentStart="true"
-                                android:text="Start Time :- "
+                                android:text="@string/start_time"
                                 android:textSize="15sp" />
 
                             <TextView
@@ -419,7 +382,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_toEndOf="@id/start_time_label"
                                 android:layout_toRightOf="@id/start_time_label"
-                                android:text="5:00 AM"
+                                android:text="@string/_5_00_am"
                                 android:textSize="15sp" />
 
                         </RelativeLayout>
@@ -431,6 +394,7 @@
                             android:layout_weight="0.5"
                             android:background="?attr/selectableItemBackgroundBorderless"
                             android:clickable="true"
+                            android:focusable="true"
                             android:onClick="setEndTime"
                             android:padding="5dp">
 
@@ -440,7 +404,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_alignParentRight="true"
-                                android:text="12:00 AM"
+                                android:text="@string/_12_00_am"
                                 android:textSize="15sp" />
 
                             <TextView
@@ -448,7 +412,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_toLeftOf="@id/end_time"
                                 android:layout_toStartOf="@id/end_time"
-                                android:text="End Time :- "
+                                android:text="@string/end_time"
                                 android:textSize="15sp" />
 
 
@@ -463,7 +427,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="SHOW ADVANCED SETTING" />
+                android:text="@string/show_advanced_setting" />
 
             <android.support.v7.widget.CardView
                 android:id="@+id/advanced_setting"
@@ -489,7 +453,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_centerVertical="true"
-                            android:text="ADVANCED SETTING"
+                            android:text="@string/advanced_setting"
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
@@ -511,7 +475,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingBottom="5dp"
-                        android:text="When you use this app, your least media volume will be 1 instead of 0."
+                        android:text="@string/when_you_use_this_app_your_least_media_volume_will_be_1_instead_of_0"
                         android:textSize="15sp" />
 
                     <RelativeLayout
@@ -535,7 +499,7 @@
                             android:layout_marginTop="13dp"
                             android:layout_toLeftOf="@id/checkbox"
                             android:layout_toStartOf="@id/checkbox"
-                            android:text="If you wish to change least media volume to 0 check this box. If long-pressing volume down button does not work, uncheck this box."
+                            android:text="@string/if_you_wish_to_change_least_media_volume_to_0_check_this_box_if_long_pressing_volume_down_button_does_not_work_uncheck_this_box"
                             android:textColor="@drawable/usage_hint"
                             android:textSize="15sp" />
                     </RelativeLayout>

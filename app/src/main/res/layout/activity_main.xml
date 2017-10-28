@@ -47,14 +47,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingBottom="10dp"
-                        android:text="LONG-PRESS VOLUME DOWN BUTTON"
+                        android:text="@string/long_press_volume_down_button"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Release button after vibrate"
+                        android:text="@string/release_button_after_vibrate"
                         android:textColor="@drawable/usage_hint"
                         android:textSize="15sp" />
 
@@ -67,7 +67,7 @@
                 style="?attr/buttonBarButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="STOP RECORDING" />
+                android:text="@string/stop_recording" />
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
@@ -88,9 +88,9 @@
                         <TextView
                             android:id="@+id/dofollowing"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:text="TO DO THE FOLLOWING"
+                            android:text="@string/to_do_the_following"
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
@@ -118,14 +118,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"
-                            android:text="Record video" />
+                            android:text="@string/record_video" />
 
 
                         <TextView
                             android:id="@+id/video_switch_text1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Stop recording video from app or notification"
+                            android:text="@string/stop_recording_video_from_app_or_notification"
                             android:textColor="@drawable/usage_hint"
                             android:textSize="15sp" />
 
@@ -148,7 +148,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="0.5"
-                                android:text="Capture photo" />
+                                android:text="@string/capture_photo" />
 
 
                             <LinearLayout
@@ -164,14 +164,14 @@
                                     android:id="@+id/capture_photo_front_camera"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="From Front Camera" />
+                                    android:text="@string/from_front_camera" />
 
                                 <CheckBox
                                     android:id="@+id/capture_photo_back_camera"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:checked="true"
-                                    android:text="From Back Camera" />
+                                    android:text="@string/from_back_camera" />
                             </LinearLayout>
                         </LinearLayout>
 
@@ -188,13 +188,13 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"
-                            android:text="Record audio" />
+                            android:text="@string/record_audio" />
 
                         <TextView
                             android:id="@+id/audio_switch_text1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Stop recording audio from app or notification"
+                            android:text="@string/stop_recording_audio_from_app_or_notification"
                             android:textColor="@drawable/usage_hint"
                             android:textSize="15sp" />
 
@@ -203,12 +203,70 @@
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/time_range_text_head"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="@string/service_auto_turn_off_time_range"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="wrap_content"
+                            android:layout_height="2dp"
+                            android:layout_centerVertical="true"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="2dp"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_toEndOf="@id/time_range_text_head"
+                            android:layout_toRightOf="@id/time_range_text_head"
+                            android:background="#dddddd" />
+
+                    </RelativeLayout>
+
+                    <com.appyvet.materialrangebar.RangeBar xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:mrb_pinMaxFont="10sp"
+                        app:mrb_pinTextColor="#ACD123"
+                        app:mrb_rangeBarPaddingBottom="12dp"
+                        app:mrb_selectorBoundaryColor="@color/colorPrimaryDark"
+                        app:mrb_selectorBoundarySize="2dp"
+                        app:mrb_selectorSize="10dp"
+                        app:mrb_tickEnd="23"
+                        app:mrb_tickInterval="1"
+                        app:mrb_tickStart="0" />
+
+
+                </LinearLayout>
+
+
+            </android.support.v7.widget.CardView>
+
+
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/more_btn"
                 style="?attr/buttonBarButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="MORE" />
+                android:text="@string/more" />
 
             <LinearLayout
                 android:id="@+id/more_opt"
@@ -235,7 +293,7 @@
                             style="?attr/buttonBarButtonStyle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="RATE THIS APP"
+                            android:text="@string/rate_this_app"
                             android:textColor="#ffffff" />
 
                     </android.support.v7.widget.CardView>
@@ -251,7 +309,7 @@
                             style="?attr/buttonBarButtonStyle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="SHARE THIS APP" />
+                            android:text="@string/share_this_app" />
 
                     </android.support.v7.widget.CardView>
 
@@ -277,7 +335,7 @@
                             style="?attr/buttonBarButtonStyle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="VIEW IN PLAYSTORE" />
+                            android:text="@string/view_in_playstore" />
 
                     </android.support.v7.widget.CardView>
 
@@ -292,7 +350,7 @@
                             style="?attr/buttonBarButtonStyle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="ABOUT" />
+                            android:text="@string/about" />
 
                     </android.support.v7.widget.CardView>
 

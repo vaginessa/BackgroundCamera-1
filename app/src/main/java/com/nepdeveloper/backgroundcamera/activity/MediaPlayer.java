@@ -77,14 +77,14 @@ public class MediaPlayer extends AppCompatActivity {
             return;
         }
 
-        videoView = (VideoView) findViewById(R.id.video);
-        playBtn = (ImageButton) findViewById(R.id.play_btn);
-        seekBar = (SeekBar) findViewById(R.id.seek_time_bar);
-        seekTime = (TextView) findViewById(R.id.seek_time);
-        totalTime = (TextView) findViewById(R.id.total_time);
-        progressBar = (ProgressBar) findViewById(R.id.progress);
+        videoView = findViewById(R.id.video);
+        playBtn = findViewById(R.id.play_btn);
+        seekBar = findViewById(R.id.seek_time_bar);
+        seekTime = findViewById(R.id.seek_time);
+        totalTime = findViewById(R.id.total_time);
+        progressBar = findViewById(R.id.progress);
 
-        videoController = (RelativeLayout) findViewById(R.id.videocontroller);
+        videoController = findViewById(R.id.videocontroller);
 
         videoController.setVisibility(View.GONE);
 
@@ -151,8 +151,12 @@ public class MediaPlayer extends AppCompatActivity {
             public void onPrepared(android.media.MediaPlayer mediaPlayer) {
                 AudioManager audio = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
                 //if video is playing without no sound user would know that volume is zero but incase of audio playback we need to implicitly increase volume to 3rd quarter level
-                if (audio != null && !isVideo && audio.getStreamVolume(AudioManager.STREAM_MUSIC) < audio.getStreamMaxVolume(AudioManager.STREAM_MUSIC) * 3 / 4) {
-                    audio.setStreamVolume(AudioManager.STREAM_MUSIC, audio.getStreamMaxVolume(AudioManager.STREAM_MUSIC) * 3 / 4, 0);
+                if (audio != null) {
+                    if (isVideo && audio.getStreamVolume(AudioManager.STREAM_MUSIC) <= audio.getStreamMaxVolume(AudioManager.STREAM_MUSIC) / 4) {
+                        Toast.makeText(MediaPlayer.this, "Turn up volume", Toast.LENGTH_SHORT).show();
+                    } else if (!isVideo && audio.getStreamVolume(AudioManager.STREAM_MUSIC) < audio.getStreamMaxVolume(AudioManager.STREAM_MUSIC) * 3 / 4) {
+                        audio.setStreamVolume(AudioManager.STREAM_MUSIC, audio.getStreamMaxVolume(AudioManager.STREAM_MUSIC) * 3 / 4, 0);
+                    }
                 }
 
                 totalTime.setText(Util.getSeekTime(videoView.getDuration()));
@@ -172,7 +176,9 @@ public class MediaPlayer extends AppCompatActivity {
             }
         });
 
-        videoView.setOnCompletionListener(new android.media.MediaPlayer.OnCompletionListener() {
+        videoView.setOnCompletionListener(new android.media.MediaPlayer.OnCompletionListener()
+
+        {
             @Override
             public void onCompletion(android.media.MediaPlayer mediaPlayer) {
                 //noinspection deprecation
@@ -187,7 +193,9 @@ public class MediaPlayer extends AppCompatActivity {
             }
         });
 
-        videoView.setOnErrorListener(new android.media.MediaPlayer.OnErrorListener() {
+        videoView.setOnErrorListener(new android.media.MediaPlayer.OnErrorListener()
+
+        {
             @Override
             public boolean onError(android.media.MediaPlayer mediaPlayer, int i, int i1) {
                 Log.i("biky", "play back error ");
@@ -196,7 +204,9 @@ public class MediaPlayer extends AppCompatActivity {
             }
         });
 
-        videoView.setOnTouchListener(new View.OnTouchListener() {
+        videoView.setOnTouchListener(new View.OnTouchListener()
+
+        {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 return gestureDetector.onTouchEvent(motionEvent);
@@ -204,7 +214,9 @@ public class MediaPlayer extends AppCompatActivity {
         });
 
 
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener()
+
+        {
             @Override
             public void onProgressChanged(SeekBar seekBar, int position, boolean fromUser) {
                 if (fromUser) {

@@ -15,8 +15,6 @@
         android:layout_height="wrap_content"
         app:sw_thumbColor="@drawable/switch_thumb_color"
         app:sw_trackColor="@drawable/switch_track_color"
-        android:textOn="On"
-        android:textOff="Off"
         android:checked="true"
         style="@style/Material.Widget.Switch"
         android:text="" />

@@ -6,10 +6,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.hardware.Camera;
 import android.os.Build;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.provider.Settings;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.TextView;
@@ -119,7 +122,7 @@ public class Util {
 
     public static void stopCapturingImage(Context context) {
         Log.i("biky", "image capture service stop called");
-        context.stopService(new Intent(context,ImageCaptureService.class));
+        context.stopService(new Intent(context, ImageCaptureService.class));
     }
 
     public static void stopMainService(Context context) {
@@ -134,5 +137,56 @@ public class Util {
         textView.setTextColor(Color.WHITE);
         return snackbar;
     }
+
+    public static boolean permissionIsGranted(Context context, String flag) {
+        if (Build.VERSION.SDK_INT < 23) {
+            return true;
+        }
+        String task;
+        if (Constant.CAPTURE_PHOTO.equals(flag)) {
+            task = "Capture";
+        } else {
+            task = "Recording";
+        }
+        //noinspection deprecation
+        if (Constant.RECORD_VIDEO.equals(flag) || Constant.CAPTURE_PHOTO.equals(flag)) {
+            if (Camera.getNumberOfCameras() <= 0) {
+                Log.i("biky", task + " Failed. No camera in this device");
+                NewMessageNotification.notify(context, task + " Failed. Your device doesn't have a camera", NewMessageNotification.ERROR);
+                return false;
+            }
+            if (!Settings.canDrawOverlays(context)) {
+                Log.i("biky", task + " Failed. Allow this app permission to draw over apps");
+                NewMessageNotification.notify(context, task + " Failed. Allow this app permission to draw over apps", NewMessageNotification.PERMISSION_DENIED);
+                return false;
+            }
+
+            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                Log.i("biky", task + " Failed. You have not permitted this app to use camera");
+                NewMessageNotification.notify(context, task + " Failed. You have not permitted this app to use camera", NewMessageNotification.PERMISSION_DENIED);
+                return false;
+            }
+        }
+
+        if (!Constant.CAPTURE_PHOTO.equals(flag) && ActivityCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            Log.i("biky", task + " Failed. You have not permitted this app to record audio");
+            NewMessageNotification.notify(context, task + " Failed. You have not permitted this app to record audio", NewMessageNotification.ERROR);
+            return false;
+        }
+
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            Log.i("biky", task + " Failed. Allow this app write permission");
+            NewMessageNotification.notify(context, task + " Failed. Allow this app write permission", NewMessageNotification.PERMISSION_DENIED);
+            return false;
+        }
+
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            Log.i("biky", task + " Failed. Allow this app read storage permission");
+            NewMessageNotification.notify(context, task + " Failed. Allow this app read storage permission", NewMessageNotification.PERMISSION_DENIED);
+            return false;
+        }
+        return true;
+    }
+
 }
 

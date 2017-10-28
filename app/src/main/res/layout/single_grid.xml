@@ -18,9 +18,10 @@
         android:textSize="12sp"
         android:textColor="#ffffff"
         android:layout_gravity="bottom|end"
-        android:text="3:00"/>
+        />
 
     <ImageView
+        android:contentDescription="@string/video"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:id="@+id/small_image"
@@ -36,6 +37,6 @@
         android:textSize="12sp"
         android:textColor="#ffffff"
         android:layout_gravity="top|end"
-        android:text="1.1 MB"/>
+    />
 
 </FrameLayout>

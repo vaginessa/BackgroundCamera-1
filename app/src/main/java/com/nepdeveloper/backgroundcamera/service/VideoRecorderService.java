@@ -51,59 +51,12 @@ public class VideoRecorderService extends Service implements SurfaceHolder.Callb
     private File videoFile = null;
     private AudioManager audio;
 
-    private boolean permissionIsGranted() {
-        if (Build.VERSION.SDK_INT < 23) {
-            return true;
-        }
-        //noinspection deprecation
-        if (Camera.getNumberOfCameras() <= 0) {
-            Log.i("biky", "Recording Failed. No camera in this device");
-            NewMessageNotification.notify(this, "Recording Failed. Your device doesn't have a camera", NewMessageNotification.ERROR);
-            return false;
-        }
-        if (!Settings.canDrawOverlays(this)) {
-            Log.i("biky", "Recording Failed. Allow this app permission to draw over apps");
-            NewMessageNotification.notify(this, "Recording Failed. Allow this app permission to draw over apps", NewMessageNotification.PERMISSION_DENIED);
-            return false;
-        }
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            Log.i("biky", "Recording Failed. You have not permitted this app to use camera");
-            NewMessageNotification.notify(this, "Recording Failed. You have not permitted this app to use camera", NewMessageNotification.PERMISSION_DENIED);
-            return false;
-        }
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-            Log.i("biky", "Recording Failed. You have not permitted this app to record audio");
-            NewMessageNotification.notify(this, "Recording Failed. You have not permitted this app to record audio", NewMessageNotification.ERROR);
-            return false;
-        }
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            Log.i("biky", "Recording Failed. Allow this app write permission");
-            NewMessageNotification.notify(this, "Recording Failed. Allow this app write permission", NewMessageNotification.PERMISSION_DENIED);
-            return false;
-        }
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            Log.i("biky", "Recording Failed. Allow this app read storage permission");
-            NewMessageNotification.notify(this, "Recording Failed. Allow this app read storage permission", NewMessageNotification.PERMISSION_DENIED);
-            return false;
-        }
-        return true;
-    }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         audio = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         preferences = getSharedPreferences(Constant.PREFERENCE_NAME, MODE_PRIVATE);
-
-        if (!permissionIsGranted()) {
-            Log.i("biky", "permission is not granted");
-            stopSelf();
-            return START_NOT_STICKY;
-        }
 
         if (intent != null && Constant.ACTION_STOP_SELF.equals(intent.getAction())) {
             Log.i("biky", "stopped from notification");

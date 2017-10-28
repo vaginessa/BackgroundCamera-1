@@ -35,10 +35,12 @@
             android:background="#60a3a3a3">
 
             <FrameLayout
+                android:id="@+id/frame_layout_"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_height="wrap_content">
+                android:layout_centerVertical="true">
 
 
                 <ImageButton
@@ -46,16 +48,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/sharefile"
                     android:onClick="shareFile"
                     android:padding="5dp"
-                    android:src="@drawable/ic_share"
-                  />
+                    android:src="@drawable/ic_share" />
 
                 <ImageButton
                     android:id="@+id/delete"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/delete_file"
                     android:onClick="deleteFile"
                     android:padding="5dp"
                     android:src="@drawable/ic_delete"
@@ -67,12 +70,16 @@
 
             <TextView
                 android:id="@+id/file_info"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:layout_margin="5dp"
-                android:text="SC20170901_120006"
+                android:layout_toLeftOf="@id/frame_layout_"
+                android:layout_toStartOf="@id/frame_layout_"
+                android:textAlignment="center"
                 android:textColor="#ffffff"
                 android:textSize="15sp" />
 

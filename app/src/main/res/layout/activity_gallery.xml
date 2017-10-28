@@ -28,6 +28,7 @@
         android:numColumns="3"
         android:listSelector="@drawable/selector"
         android:clickable="true"
+        android:focusable="true"
         android:verticalSpacing="2dp"
         android:horizontalSpacing="2dp"
         android:drawSelectorOnTop="true"

@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
         AppRater.appLaunched(this);
 
-        adView = (AdView) findViewById(R.id.adView);
+        adView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
 
@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !android.provider.Settings.canDrawOverlays(this)) {
                     requestOverlayPermission();
                 } else {
-                    Log.i("biky", "all permission granted");
+                    allPermissionGranted();
                 }
             } else {
                 requestPermission();
@@ -128,11 +128,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         setupUI();
-
-        if (preferences.getBoolean(Constant.SERVICE_ACTIVE, true)) {
-            Intent i = new Intent(this, MyService.class);
-            startService(i);
-        }
 /*
         Calendar calendar = Calendar.getInstance();
 
@@ -171,12 +166,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupUI() {
-        final RadioButton recordVideo = ((RadioButton) findViewById(R.id.record_video));
-        final RadioButton capturePhoto = ((RadioButton) findViewById(R.id.capture_photo));
-        final RadioButton recordAudio = ((RadioButton) findViewById(R.id.record_audio));
-        final CheckBox capturePhotoBackCamera = ((CheckBox) findViewById(R.id.capture_photo_back_camera));
-        final CheckBox capturePhotoFrontCamera = ((CheckBox) findViewById(R.id.capture_photo_front_camera));
-        final AppCompatButton moreBtn = ((AppCompatButton) findViewById(R.id.more_btn));
+        final RadioButton recordVideo = findViewById(R.id.record_video);
+        final RadioButton capturePhoto = findViewById(R.id.capture_photo);
+        final RadioButton recordAudio = findViewById(R.id.record_audio);
+        final CheckBox capturePhotoBackCamera = findViewById(R.id.capture_photo_back_camera);
+        final CheckBox capturePhotoFrontCamera = findViewById(R.id.capture_photo_front_camera);
+        final AppCompatButton moreBtn = findViewById(R.id.more_btn);
 
         findViewById(R.id.stop_recording).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -260,7 +255,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        final ScrollView scroll = (ScrollView) findViewById(R.id.scroll_view);
+        final ScrollView scroll = findViewById(R.id.scroll_view);
         moreBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -386,9 +381,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if (preferences.getBoolean(Constant.SERVICE_ACTIVE, true)) {
-            bindService();
-        }
     }
 
     private void bindService() {
@@ -447,6 +439,9 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         unbindService();
                         stopService(new Intent(MainActivity.this, MyService.class));
+                        Util.stopCapturingImage(MainActivity.this);
+                        Util.stopRecordingAudio(MainActivity.this);
+                        Util.stopRecordingVideo(MainActivity.this);
                     }
                 }
             }
@@ -545,7 +540,7 @@ public class MainActivity extends AppCompatActivity {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !android.provider.Settings.canDrawOverlays(this)) {
                     requestOverlayPermission();
                 } else {
-                    Log.i("biky", "all permission granted");
+                    allPermissionGranted();
                 }
             } else {
                 showDialog();
@@ -561,7 +556,7 @@ public class MainActivity extends AppCompatActivity {
 
         new AlertDialog.Builder(this)
                 .setTitle("Allow Permission")
-                .setMessage("You need to allow 'Draw over other apps' permission inorder to function Camera in background.")
+                .setMessage("You need to allow 'Display over other apps' permission inorder to function Camera in background.")
                 .setPositiveButton("ALLOW PERMISSION", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -682,7 +677,7 @@ public class MainActivity extends AppCompatActivity {
                                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !android.provider.Settings.canDrawOverlays(MainActivity.this)) {
                                                 requestOverlayPermission();
                                             } else {
-                                                Log.i("biky", "all permission granted");
+                                                allPermissionGranted();
                                             }
                                         } else {
                                             showDialog();
@@ -693,7 +688,7 @@ public class MainActivity extends AppCompatActivity {
                                 .create()
                                 .show();
                     } else {
-                        Log.i("biky", "all permission granted");
+                        allPermissionGranted();
                     }
                 } else {
                     showDialog();
@@ -706,11 +701,20 @@ public class MainActivity extends AppCompatActivity {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !android.provider.Settings.canDrawOverlays(this)) {
                     requestOverlayPermission();
                 } else {
-                    Log.i("biky", "all permission granted");
+                    allPermissionGranted();
                 }
             } else {
                 showDialog();
             }
+        }
+    }
+
+    private void allPermissionGranted() {
+        Log.i("biky","all permission is granted");
+        if (preferences.getBoolean(Constant.SERVICE_ACTIVE, true)) {
+            Intent i = new Intent(this, MyService.class);
+            startService(i);
+            bindService();
         }
     }
 
