@@ -4,7 +4,7 @@
     android:id="@+id/agreement_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.nepdeveloper.backgroundcamera.Activity.AgreementActivity">
+    tools:context="com.nepdeveloper.backgroundcamera.activity.AgreementActivity">
 
     <LinearLayout
         android:id="@+id/bottom_bar"

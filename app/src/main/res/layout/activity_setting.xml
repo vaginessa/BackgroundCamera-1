@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.nepdeveloper.backgroundcamera.Activity.Settings">
+    tools:context="com.nepdeveloper.backgroundcamera.activity.Settings">
 
     <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
         android:id="@+id/adView"
@@ -267,7 +267,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Image capture and video recording notification"
+                        android:text="Note: In android 8.0+ ongoing notification will however be shown"
                         android:textSize="15sp" />
 
                 </LinearLayout>

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDarkest"
-    tools:context="com.nepdeveloper.backgroundcamera.Activity.MediaPlayer">
+    tools:context="com.nepdeveloper.backgroundcamera.activity.MediaPlayer">
 
     <VideoView
         android:id="@+id/video"

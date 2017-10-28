@@ -21,7 +21,7 @@
         android:theme="@style/AppTheme"
         tools:replace="android:theme">
         <activity
-            android:name=".Activity.AgreementActivity"
+            android:name=".activity.AgreementActivity"
             android:label="Background Recorder"
             android:launchMode="singleTop">
             <intent-filter>
@@ -31,57 +31,57 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activity.MainActivity"
+            android:name=".activity.MainActivity"
             android:label="Background Recorder"
             android:launchMode="singleTop" />
         <activity
-            android:name=".Activity.MediaPlayer"
+            android:name=".activity.MediaPlayer"
             android:label="Video Player"
             android:launchMode="singleTop"
-            android:parentActivityName=".Activity.MainActivity"
+            android:parentActivityName=".activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Activity.Settings"
+            android:name=".activity.Settings"
             android:label="Settings"
             android:launchMode="singleTop"
-            android:parentActivityName=".Activity.MainActivity" />
+            android:parentActivityName=".activity.MainActivity" />
         <activity
-            android:name=".Activity.GalleryGrid"
+            android:name=".activity.GalleryGrid"
             android:label="Gallery"
             android:launchMode="singleTop"
-            android:parentActivityName=".Activity.MainActivity" />
+            android:parentActivityName=".activity.MainActivity" />
         <activity
-            android:name=".Activity.GalleryFullscreen"
+            android:name=".activity.GalleryFullscreen"
             android:label="Gallery"
             android:launchMode="singleTop"
-            android:parentActivityName=".Activity.MainActivity"
+            android:parentActivityName=".activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <service
-            android:name=".Service.MyService"
+            android:name=".service.MyService"
             android:enabled="true"
             android:exported="true"
             android:launchMode="singleTop" />
         <service
-            android:name=".Service.ImageCaptureService"
+            android:name=".service.ImageCaptureService"
             android:enabled="true"
             android:exported="true"
             android:launchMode="singleTop" />
         <service
-            android:name=".Service.VideoRecorderService"
+            android:name=".service.VideoRecorderService"
             android:enabled="true"
             android:exported="true"
             android:launchMode="singleTop"
             android:stopWithTask="false" />
         <service
-            android:name=".Service.AudioRecorderService"
+            android:name=".service.AudioRecorderService"
             android:enabled="true"
             android:exported="true"
             android:launchMode="singleTop"
             android:stopWithTask="false" />
 
         <receiver
-            android:name=".BroadcastReceiver.BootCompleted"
+            android:name=".broadcastReceiver.BootCompleted"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -90,15 +90,19 @@
         </receiver>
 
         <service
-            android:name=".Service.FileTransferService"
+            android:name=".service.FileTransferService"
             android:enabled="true"
             android:exported="true"
-            android:launchMode="singleTop"></service>
+            android:launchMode="singleTop">
+
+        </service>
 
         <receiver
-            android:name=".BroadcastReceiver.AlarmReceiver"
+            android:name=".broadcastReceiver.AlarmReceiver"
             android:enabled="true"
-            android:exported="true"></receiver>
+            android:exported="true">
+
+        </receiver>
     </application>
 
 </manifest>
