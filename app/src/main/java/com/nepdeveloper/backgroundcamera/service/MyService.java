@@ -11,6 +11,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.Build;
+import android.os.Handler;
 import android.os.IBinder;
 
 import com.nepdeveloper.backgroundcamera.R;
@@ -26,6 +27,14 @@ public class MyService extends Service {
     private MediaPlayer mediaPlayer;
     private SharedPreferences preferences;
     private AudioManager audio;
+    private boolean dontTrigger = false;
+    private Handler handler = new Handler();
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            dontTrigger = true;
+        }
+    };
 
     public MyService() {
     }
@@ -141,7 +150,7 @@ public class MyService extends Service {
                 //    Log.i("biky", "total time 15 = " + totalTime15);
 
                 //how much time should volume down button should be press to trigger the event is given by timej in seconds
-                if (totalTime0 > Constant.HOLD_DOWN_TIME) {
+                if (totalTime0 > Constant.HOLD_DOWN_TIME && preferences.getBoolean(Constant.SERVICE_ACTIVE, true)) {
                     trigger();
                 }
                 prevMillis = currMillis;
@@ -154,17 +163,23 @@ public class MyService extends Service {
     };
 
     public void trigger() {
+        if (dontTrigger) {
+            return;
+        }
         if (preferences == null) {
             preferences = getSharedPreferences(Constant.PREFERENCE_NAME, MODE_PRIVATE);
         }
         if (preferences == null) {
             return;
         }
-        if (Util.permissionIsGranted(this, Constant.CAPTURE_PHOTO) && preferences.getBoolean(Constant.CAPTURE_PHOTO, false)) {
-            if (preferences.getBoolean(Constant.CAPTURE_PHOTO_BACK_CAM, true) ||
-                    preferences.getBoolean(Constant.CAPTURE_PHOTO_FRONT_CAM, false)) {
-                if (!Util.isMyServiceRunning(this, ImageCaptureService.class)) {
+        if (preferences.getBoolean(Constant.CAPTURE_PHOTO, false) &&
+                (preferences.getBoolean(Constant.CAPTURE_PHOTO_BACK_CAM, true)
+                        ||
+                        preferences.getBoolean(Constant.CAPTURE_PHOTO_FRONT_CAM, false))) {
 
+            if (Util.permissionIsGranted(this, Constant.CAPTURE_PHOTO)) {
+
+                if (!Util.isMyServiceRunning(this, ImageCaptureService.class)) {
                     Util.stopRecordingVideo(this);
                     Util.stopRecordingAudio(this);
                     Util.stopCapturingImage(this);
@@ -181,45 +196,65 @@ public class MyService extends Service {
                 } else {
                     Log.i("biky", "image capture service already running");
                 }
+
+            } else {
+                dontTrigger = true;
+                handler.removeCallbacks(runnable);
+                handler.postDelayed(runnable, 2000);
             }
-        } else if (Util.permissionIsGranted(this, Constant.RECORD_VIDEO) && preferences.getBoolean(Constant.RECORD_VIDEO, true)) {
-            if (!Util.isMyServiceRunning(this, VideoRecorderService.class)) {
+        } else if (preferences.getBoolean(Constant.RECORD_VIDEO, true)) {
 
-                Util.stopRecordingVideo(this);
-                Util.stopRecordingAudio(this);
-                Util.stopCapturingImage(this);
+            if (Util.permissionIsGranted(this, Constant.RECORD_VIDEO)) {
 
-                Util.vibrate(this, 100);
+                if (!Util.isMyServiceRunning(this, VideoRecorderService.class)) {
+                    Util.stopRecordingVideo(this);
+                    Util.stopRecordingAudio(this);
+                    Util.stopCapturingImage(this);
 
-                final Intent v = new Intent(this, VideoRecorderService.class);
-                Log.i("biky", "video recorder service called");
+                    Util.vibrate(this, 100);
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    startForegroundService(v);
+                    final Intent v = new Intent(this, VideoRecorderService.class);
+                    Log.i("biky", "video recorder service called");
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        startForegroundService(v);
+                    } else {
+                        startService(v);
+                    }
                 } else {
-                    startService(v);
+                    Log.i("biky", "video recording service already running");
                 }
             } else {
-                Log.i("biky", "video recording service already running");
+                dontTrigger = true;
+                handler.removeCallbacks(runnable);
+                handler.postDelayed(runnable, 2000);
             }
-        } else if (Util.permissionIsGranted(this, Constant.RECORD_AUDIO) && preferences.getBoolean(Constant.RECORD_AUDIO, false)) {
-            if (!Util.isMyServiceRunning(this, AudioRecorderService.class)) {
-                Util.vibrate(this, 100);
+        } else if (preferences.getBoolean(Constant.RECORD_AUDIO, false)) {
 
-                Util.stopRecordingVideo(this);
-                Util.stopRecordingAudio(this);
-                Util.stopCapturingImage(this);
+            if (Util.permissionIsGranted(this, Constant.RECORD_AUDIO)) {
 
-                final Intent v = new Intent(this, AudioRecorderService.class);
-                Log.i("biky", "audio recorder service called");
+                if (!Util.isMyServiceRunning(this, AudioRecorderService.class)) {
+                    Util.vibrate(this, 100);
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    startForegroundService(v);
+                    Util.stopRecordingVideo(this);
+                    Util.stopRecordingAudio(this);
+                    Util.stopCapturingImage(this);
+
+                    final Intent v = new Intent(this, AudioRecorderService.class);
+                    Log.i("biky", "audio recorder service called");
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        startForegroundService(v);
+                    } else {
+                        startService(v);
+                    }
                 } else {
-                    startService(v);
+                    Log.i("biky", "audio recording service already running");
                 }
             } else {
-                Log.i("biky", "audio recording service already running");
+                dontTrigger = true;
+                handler.removeCallbacks(runnable);
+                handler.postDelayed(runnable, 2000);
             }
         }
     }

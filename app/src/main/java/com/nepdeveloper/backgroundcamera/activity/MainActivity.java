@@ -127,6 +127,11 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        if (preferences.getBoolean(Constant.SERVICE_ACTIVE, true)) {
+            Intent i = new Intent(this, MyService.class);
+            startService(i);
+        }
+
         setupUI();
 /*
         Calendar calendar = Calendar.getInstance();
@@ -378,14 +383,15 @@ public class MainActivity extends AppCompatActivity {
     };
 
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
     private void bindService() {
         Intent intent = new Intent(this, MyService.class);
         bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        bindService();
     }
 
     @Override
@@ -448,11 +454,10 @@ public class MainActivity extends AppCompatActivity {
         });
         //presetup
         if (preferences != null) {
-
             if (preferences.getBoolean(Constant.SERVICE_ACTIVE, true)) {
-                serviceSwitch.setChecked(preferences.getBoolean(Constant.SERVICE_ACTIVE, true));
+                serviceSwitch.setChecked(true);
             } else {
-                serviceSwitch.setChecked(preferences.getBoolean(Constant.SERVICE_ACTIVE, false));
+                serviceSwitch.setChecked(false);
                 Util.prepareSnackBar(findViewById(R.id.coordinate_layout), "Service is turned off")
                         .setAction("TURN ON", new View.OnClickListener() {
                             @Override
@@ -710,14 +715,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void allPermissionGranted() {
-        Log.i("biky","all permission is granted");
-        if (preferences.getBoolean(Constant.SERVICE_ACTIVE, true)) {
-            Intent i = new Intent(this, MyService.class);
-            startService(i);
-            bindService();
-        }
+        Log.i("biky", "all permission is granted");
     }
-
 
     public void openGallery(View v) {
         startActivity(new Intent(this, GalleryGrid.class));

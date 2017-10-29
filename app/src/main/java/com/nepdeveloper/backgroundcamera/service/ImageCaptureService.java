@@ -67,7 +67,6 @@ public class ImageCaptureService extends HiddenCameraService {
                         .setImageFile(imageFile)
                         .setImageRotation(intent.getBooleanExtra(Constant.CAPTURE_PHOTO_BACK_CAM, true) ?
                                 CameraRotation.ROTATION_90 : CameraRotation.ROTATION_270)
-                        //.setFlash(intent.getBooleanExtra(Constant.FLASH_ON, false))
                         .build();
 
                 startCamera(cameraConfig);
@@ -191,7 +190,7 @@ public class ImageCaptureService extends HiddenCameraService {
                 Log.i("biky", "Camera permission not available.");
                 break;
             case CameraError.ERROR_DOES_NOT_HAVE_OVERDRAW_PERMISSION:
-                NewMessageNotification.notify(this, "Capture Failed. Allow this app permission to draw over apps", NewMessageNotification.PERMISSION_DENIED);
+                NewMessageNotification.notify(this, "Capture Failed. Allow this app permission to display over other apps", NewMessageNotification.PERMISSION_DENIED);
                 Log.i("biky", "Allow this app permission to draw over apps");
                 break;
             case CameraError.ERROR_DOES_NOT_HAVE_FRONT_CAMERA:

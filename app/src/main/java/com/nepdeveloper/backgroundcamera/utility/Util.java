@@ -156,8 +156,8 @@ public class Util {
                 return false;
             }
             if (!Settings.canDrawOverlays(context)) {
-                Log.i("biky", task + " Failed. Allow this app permission to draw over apps");
-                NewMessageNotification.notify(context, task + " Failed. Allow this app permission to draw over apps", NewMessageNotification.PERMISSION_DENIED);
+                Log.i("biky", task + " Failed. Allow this app permission to display over other apps");
+                NewMessageNotification.notify(context, task + " Failed. Allow this app permission to display over apps", NewMessageNotification.PERMISSION_DENIED);
                 return false;
             }
 
@@ -166,11 +166,18 @@ public class Util {
                 NewMessageNotification.notify(context, task + " Failed. You have not permitted this app to use camera", NewMessageNotification.PERMISSION_DENIED);
                 return false;
             }
+            if (context.getSharedPreferences(Constant.PREFERENCE_NAME, Context.MODE_PRIVATE).getBoolean(Constant.CAPTURE_PHOTO_FRONT_CAM, false)) {
+                if (!context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FRONT)) {
+                    Log.i("biky", task + " Failed. No front camera in this device");
+                    NewMessageNotification.notify(context, task + " Failed. No front camera in this device", NewMessageNotification.ERROR);
+                    return false;
+                }
+            }
         }
 
         if (!Constant.CAPTURE_PHOTO.equals(flag) && ActivityCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
             Log.i("biky", task + " Failed. You have not permitted this app to record audio");
-            NewMessageNotification.notify(context, task + " Failed. You have not permitted this app to record audio", NewMessageNotification.ERROR);
+            NewMessageNotification.notify(context, task + " Failed. You have not permitted this app to record audio", NewMessageNotification.PERMISSION_DENIED);
             return false;
         }
 

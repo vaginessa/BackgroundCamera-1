@@ -206,6 +206,7 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 app:cardUseCompatPadding="true">
 
                 <LinearLayout
@@ -253,7 +254,6 @@
                         app:mrb_tickEnd="23"
                         app:mrb_tickInterval="1"
                         app:mrb_tickStart="0" />
-
 
                 </LinearLayout>
 
