@@ -125,7 +125,12 @@ public class MyService extends Service {
                     Util.stopRecordingAudio(MyService.this);
                 }
             } else if ("android.media.VOLUME_CHANGED_ACTION".equals(intent.getAction())) {
-                int volume = intent.getIntExtra("android.media.EXTRA_VOLUME_STREAM_VALUE", 0);
+                int volume;
+                try {
+                    volume = intent.getIntExtra("android.media.EXTRA_VOLUME_STREAM_VALUE", 0);
+                } catch (Exception e) {
+                    return;
+                }
 
                 Log.i("biky", "volume = " + volume);
                 long currMillis = System.currentTimeMillis();

@@ -295,7 +295,7 @@ public class Settings extends AppCompatActivity {
                 ((Spinner) findViewById(R.id.video_recording_quality)).setSelection(2);
                 break;
             default:
-                ((Spinner) findViewById(R.id.video_recording_quality)).setSelection(0);
+                ((Spinner) findViewById(R.id.video_recording_quality)).setSelection(1);
         }
 
         //  ((TextView) findViewById(R.id.storage_location)).setText(preferences.getString(Constant.STORAGE_LOCATION, Constant.FILE.getAbsolutePath()));
