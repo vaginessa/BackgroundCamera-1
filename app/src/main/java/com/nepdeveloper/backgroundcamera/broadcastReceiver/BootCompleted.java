@@ -6,6 +6,7 @@ import android.content.Intent;
 
 import com.nepdeveloper.backgroundcamera.service.MyService;
 import com.nepdeveloper.backgroundcamera.utility.Constant;
+import com.nepdeveloper.backgroundcamera.utility.Log;
 
 public class BootCompleted extends BroadcastReceiver {
 
@@ -15,7 +16,11 @@ public class BootCompleted extends BroadcastReceiver {
             if (context.getSharedPreferences(Constant.PREFERENCE_NAME, Context.MODE_PRIVATE)
                     .getBoolean(Constant.SERVICE_ACTIVE, true)) {
                 Intent serviceIntent = new Intent(context, MyService.class);
-                context.startService(serviceIntent);
+                try {
+                    context.startService(serviceIntent);
+                } catch (Exception e) {
+                    Log.e("biky", e.getMessage());
+                }
             }
         }
     }

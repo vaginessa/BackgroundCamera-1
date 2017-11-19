@@ -177,54 +177,6 @@ public class Settings extends AppCompatActivity {
             }
         });
 
-        ((RadioButton) findViewById(R.id.always_active_radio)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                if (checked) {
-                    preferences.edit().putBoolean(Constant.SERVICE_ALWAYS_ACTIVE, true).apply();
-
-                    RelativeLayout layout = (RelativeLayout) findViewById(R.id.start_time_btn);
-                    layout.setEnabled(false);
-                    for (int i = 0; i < layout.getChildCount(); i++) {
-                        View child = layout.getChildAt(i);
-                        child.setEnabled(false);
-                    }
-
-                    layout = (RelativeLayout) findViewById(R.id.end_time_btn);
-                    layout.setEnabled(false);
-                    for (int i = 0; i < layout.getChildCount(); i++) {
-                        View child = layout.getChildAt(i);
-                        child.setEnabled(false);
-                    }
-                }
-            }
-        });
-
-        ((RadioButton) findViewById(R.id.schedule_radio)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                if (checked) {
-                    preferences.edit().putBoolean(Constant.SERVICE_ALWAYS_ACTIVE, false).apply();
-
-
-                    RelativeLayout layout = (RelativeLayout) findViewById(R.id.start_time_btn);
-                    layout.setEnabled(true);
-                    for (int i = 0; i < layout.getChildCount(); i++) {
-                        View child = layout.getChildAt(i);
-                        child.setEnabled(true);
-                    }
-
-                    layout = (RelativeLayout) findViewById(R.id.end_time_btn);
-                    layout.setEnabled(true);
-                    for (int i = 0; i < layout.getChildCount(); i++) {
-                        View child = layout.getChildAt(i);
-                        child.setEnabled(true);
-                    }
-
-                }
-            }
-        });
-
         final AppCompatButton showAdvancedSetting = (AppCompatButton) findViewById(R.id.show_advanced_setting);
 
         final ScrollView scroll = (android.widget.ScrollView) findViewById(R.id.scroll_view);
@@ -310,47 +262,6 @@ public class Settings extends AppCompatActivity {
 
         ((Switch) findViewById(R.id.show_notification)).setChecked(preferences.getBoolean(Constant.SHOW_NOTIFICATION, true));
 
-        boolean serviceAlwaysActive = preferences.getBoolean(Constant.SERVICE_ALWAYS_ACTIVE, false);
-
-        RelativeLayout layout = (RelativeLayout) findViewById(R.id.start_time_btn);
-        layout.setEnabled(!serviceAlwaysActive);
-        for (int i = 0; i < layout.getChildCount(); i++) {
-            View child = layout.getChildAt(i);
-            child.setEnabled(!serviceAlwaysActive);
-        }
-
-        layout = (RelativeLayout) findViewById(R.id.end_time_btn);
-        layout.setEnabled(!serviceAlwaysActive);
-        for (int i = 0; i < layout.getChildCount(); i++) {
-            View child = layout.getChildAt(i);
-            child.setEnabled(!serviceAlwaysActive);
-        }
-
-        ((RadioButton) findViewById(R.id.always_active_radio)).setChecked(serviceAlwaysActive);
-        ((RadioButton) findViewById(R.id.schedule_radio)).setChecked(!serviceAlwaysActive);
-
-
-        final String startTime = preferences.getString(Constant.START_TIME, Constant.DEFAULT_START_TIME);
-        final String endTime = preferences.getString(Constant.END_TIME, Constant.DEFAULT_END_TIME);
-
-        try {
-            ((TextView) findViewById(R.id.start_time)).setText(
-                    new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(new SimpleDateFormat("HH:mm", Locale.ENGLISH).parse(startTime))
-            );
-        } catch (Exception e) {
-            ((TextView) findViewById(R.id.start_time)).setText(Constant.DEFAULT_START_TIME);
-            e.printStackTrace();
-        }
-        try {
-            ((TextView) findViewById(R.id.end_time)).setText(
-                    new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(new SimpleDateFormat("HH:mm", Locale.ENGLISH).parse(endTime))
-            );
-        } catch (Exception e) {
-            ((TextView) findViewById(R.id.start_time)).setText(Constant.DEFAULT_END_TIME);
-            e.printStackTrace();
-        }
-
-
         ((CheckBox) findViewById(R.id.checkbox)).setChecked(!preferences.getBoolean(Constant.LEAST_VOLUME_IS_ONE, true));
     }
 
@@ -406,54 +317,6 @@ public class Settings extends AppCompatActivity {
                 preferences.edit().putBoolean(Constant.SHUTTER_SOUND, false).apply();
             }
         }
-    }
-
-    public void setStartTime(View view) {
-        final String startTime = preferences.getString(Constant.START_TIME, Constant.DEFAULT_START_TIME);
-
-        RadialTimePickerDialogFragment rtpd = new RadialTimePickerDialogFragment()
-                .setOnTimeSetListener(new RadialTimePickerDialogFragment.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(RadialTimePickerDialogFragment dialog, int hourOfDay, int minute) {
-                        try {
-                            String newStartTime = new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(
-                                    new SimpleDateFormat("HH:mm", Locale.ENGLISH).parse(hourOfDay + ":" + minute));
-                            ((TextView) findViewById(R.id.start_time)).setText(newStartTime);
-                            preferences.edit().putString(Constant.START_TIME, hourOfDay + ":" + minute).apply();
-                        } catch (Exception e) {
-                            Log.i("biky", e.getMessage());
-                        }
-                    }
-                })
-                .setStartTime(Integer.parseInt(startTime.split(":")[0]), Integer.parseInt(startTime.split(":")[1]))
-                .setDoneText("OK")
-                .setCancelText("CANCEL")
-                .setForced12hFormat();
-        rtpd.show(getSupportFragmentManager(), Constant.TIME_PICKER);
-    }
-
-    public void setEndTime(View view) {
-        final String endTime = preferences.getString(Constant.END_TIME, Constant.DEFAULT_END_TIME);
-
-        RadialTimePickerDialogFragment rtpd = new RadialTimePickerDialogFragment()
-                .setOnTimeSetListener(new RadialTimePickerDialogFragment.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(RadialTimePickerDialogFragment dialog, int hourOfDay, int minute) {
-                        try {
-                            String newStartTime = new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(
-                                    new SimpleDateFormat("HH:mm", Locale.ENGLISH).parse(hourOfDay + ":" + minute));
-                            ((TextView) findViewById(R.id.end_time)).setText(newStartTime);
-                            preferences.edit().putString(Constant.END_TIME, hourOfDay + ":" + minute).apply();
-                        } catch (Exception e) {
-                            Log.i("biky", e.getMessage());
-                        }
-                    }
-                })
-                .setStartTime(Integer.parseInt(endTime.split(":")[0]), Integer.parseInt(endTime.split(":")[1]))
-                .setDoneText("OK")
-                .setCancelText("CANCEL")
-                .setForced12hFormat();
-        rtpd.show(getSupportFragmentManager(), Constant.TIME_PICKER);
     }
 /*
     public void openDirChooser(View v) {

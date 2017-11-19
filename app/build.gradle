@@ -8,8 +8,8 @@ android {
         minSdkVersion 14
         targetSdkVersion 27
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        versionCode 12
-        versionName '12.11.17'
+        versionCode 13
+        versionName '19.11.17'
     }
     buildTypes {
         release {
@@ -39,6 +39,6 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:design:27.0.1'
     compile 'commons-io:commons-io:2.4'
-    compile 'com.appyvet:materialrangebar:1.4'
     testCompile 'junit:junit:4.12'
+    implementation project(':circularrangeslider')
 }

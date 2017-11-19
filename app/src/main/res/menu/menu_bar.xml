@@ -3,14 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/schedule_service"
+        android:icon="@drawable/ic_schedule"
+        android:title="@string/schedule_service"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/setting"
         android:icon="@drawable/ic_setting"
-        android:title="Setting"
-        app:showAsAction="ifRoom|withText" />
+        android:title="@string/setting"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/service_switch"
-        app:actionLayout="@layout/action_bar_switch"
         android:title=""
+        app:actionLayout="@layout/action_bar_switch"
         app:showAsAction="always" />
 </menu>

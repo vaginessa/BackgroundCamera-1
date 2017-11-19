@@ -17,9 +17,9 @@ public class Constant {
     public static final String CAPTURE_PHOTO = "CAPTURE_PHOTO";
     public static final String STORAGE_LOCATION = "STORAGE_LOCATION";
     public static final String STORAGE_LOCATION_OLD = "STORAGE_LOCATION_OLD";
-    public static final String START_TIME = "START_TIME";
-    public static final String END_TIME = "END_TIME";
-    public static final String SERVICE_ALWAYS_ACTIVE = "SERVICE_ALWAYS_ACTIVE";
+    public static final String START_HOUR = "START_HOUR";
+    public static final String END_HOUR = "END_HOUR";
+    public static final String SCHEDULE_SERVICE = "SCHEDULE_SERVICE";
 
     //settings
     public static final String SHUTTER_SOUND = "SHUTTER_SOUND";
@@ -63,10 +63,8 @@ public class Constant {
     public static final int NOTIFICATION_ID_VIDEO_RECORD = 100;
     public static final int NOTIFICATION_ID_AUDIO_RECORD = 200;
     public static final int NOTIFICATION_ID_TRANSFERRING_FILES = 300;
-    public static final String DEFAULT_START_TIME = "5:00";         // 5 AM
-    public static final String DEFAULT_END_TIME = "00:00";   // 12 aM
-    public static final String TIME_PICKER = "TIME_PICKER";
-
+    public static final int DEFAULT_START_HOUR = 6;         // 6 AM
+    public static final int DEFAULT_END_HOUR = 0;   // 12 AM
 
 
 //    public static int DOCUMENT_TREE = 25234;

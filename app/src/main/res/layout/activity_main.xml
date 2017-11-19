@@ -57,8 +57,9 @@
                         android:text="@string/release_button_after_vibrate"
                         android:textColor="@drawable/usage_hint"
                         android:textSize="15sp" />
-
                 </LinearLayout>
+
+
             </android.support.v7.widget.CardView>
 
 
@@ -202,64 +203,6 @@
 
                 </LinearLayout>
             </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                app:cardUseCompatPadding="true">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="10dp">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/time_range_text_head"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:text="@string/service_auto_turn_off_time_range"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-
-                        <View
-                            android:layout_width="wrap_content"
-                            android:layout_height="2dp"
-                            android:layout_centerVertical="true"
-                            android:layout_marginBottom="10dp"
-                            android:layout_marginLeft="2dp"
-                            android:layout_marginStart="4dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_toEndOf="@id/time_range_text_head"
-                            android:layout_toRightOf="@id/time_range_text_head"
-                            android:background="#dddddd" />
-
-                    </RelativeLayout>
-
-                    <com.appyvet.materialrangebar.RangeBar xmlns:app="http://schemas.android.com/apk/res-auto"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:mrb_pinMaxFont="10sp"
-                        app:mrb_pinTextColor="#ACD123"
-                        app:mrb_rangeBarPaddingBottom="12dp"
-                        app:mrb_selectorBoundaryColor="@color/colorPrimaryDark"
-                        app:mrb_selectorBoundarySize="2dp"
-                        app:mrb_selectorSize="10dp"
-                        app:mrb_tickEnd="23"
-                        app:mrb_tickInterval="1"
-                        app:mrb_tickStart="0" />
-
-                </LinearLayout>
-
-
-            </android.support.v7.widget.CardView>
-
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/more_btn"

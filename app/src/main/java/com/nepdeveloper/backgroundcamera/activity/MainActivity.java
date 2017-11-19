@@ -480,6 +480,9 @@ public class MainActivity extends AppCompatActivity {
                 Intent i = new Intent(this, Settings.class);
                 startActivity(i);
                 return true;
+            case R.id.schedule_service:
+                startActivity(new Intent(this, ScheduleActivity.class));
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

@@ -26,13 +26,12 @@
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".activity.MainActivity"
-            android:label="Background Recorder"
+            android:label="Bg Recorder"
             android:launchMode="singleTop" />
         <activity
             android:name=".activity.MediaPlayer"
@@ -56,6 +55,12 @@
             android:launchMode="singleTop"
             android:parentActivityName=".activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity android:name=".activity.ScheduleActivity"
+            android:label="Schedule Service"
+            android:launchMode="singleTop"
+            android:parentActivityName=".activity.MainActivity">
+        </activity>
 
         <service
             android:name=".service.MyService"
@@ -93,16 +98,13 @@
             android:name=".service.FileTransferService"
             android:enabled="true"
             android:exported="true"
-            android:launchMode="singleTop">
-
-        </service>
+            android:launchMode="singleTop"></service>
 
         <receiver
             android:name=".broadcastReceiver.AlarmReceiver"
             android:enabled="true"
-            android:exported="true">
+            android:exported="true"></receiver>
 
-        </receiver>
     </application>
 
 </manifest>
